@@ -1,0 +1,205 @@
+{
+  "projects": [
+    {
+      "id": "awana-connect",
+      "issue_number": 101,
+      "title": "Awana Connect SDK",
+      "slug": "awana-connect",
+      "description": "A lightweight TypeScript SDK for seamless integration with Awana's API services. Provides type-safe methods for authentication, data synchronization, and real-time event streaming. Built for modern web applications with full ESM support.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "active",
+        "usage": "widely-used",
+        "notes": "Production-ready, actively maintained with weekly releases"
+      },
+      "tags": ["typescript", "sdk", "api", "real-time"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&q=80",
+          "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/connect",
+        "repository": "https://github.com/awanalabs/connect-sdk",
+        "documentation": "https://docs.awanalabs.com/connect"
+      },
+      "timestamps": {
+        "created_at": "2023-06-15T10:00:00Z",
+        "last_updated_at": "2025-01-28T14:30:00Z"
+      }
+    },
+    {
+      "id": "data-pipeline",
+      "issue_number": 102,
+      "title": "DataPipeline",
+      "slug": "data-pipeline",
+      "description": "A high-performance data processing framework designed for ETL workflows. Features include parallel processing, automatic retry mechanisms, and comprehensive logging. Supports multiple data sources including SQL databases, REST APIs, and file systems.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "active",
+        "usage": "used",
+        "notes": "Stable release, used in production by several organizations"
+      },
+      "tags": ["python", "etl", "data-processing", "automation"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/datapipeline",
+        "repository": "https://github.com/awanalabs/datapipeline",
+        "documentation": "https://docs.awanalabs.com/datapipeline"
+      },
+      "timestamps": {
+        "created_at": "2023-03-20T08:00:00Z",
+        "last_updated_at": "2025-01-15T09:45:00Z"
+      }
+    },
+    {
+      "id": "ui-components",
+      "issue_number": 103,
+      "title": "Awana UI Components",
+      "slug": "ui-components",
+      "description": "A comprehensive React component library following Awana's design system. Includes 50+ accessible, customizable components with full dark mode support. Built with Radix UI primitives and styled with Tailwind CSS for maximum flexibility.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "active",
+        "usage": "widely-used",
+        "notes": "Core library used across all Awana products"
+      },
+      "tags": ["react", "components", "design-system", "accessibility"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=800&q=80",
+          "https://images.unsplash.com/photo-1517134191118-9d595e4c8c2b?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/ui",
+        "repository": "https://github.com/awanalabs/ui-components",
+        "documentation": "https://ui.awanalabs.com"
+      },
+      "timestamps": {
+        "created_at": "2022-11-10T12:00:00Z",
+        "last_updated_at": "2025-02-01T16:20:00Z"
+      }
+    },
+    {
+      "id": "auth-service",
+      "issue_number": 104,
+      "title": "AuthGuard",
+      "slug": "auth-service",
+      "description": "Enterprise-grade authentication and authorization service. Supports OAuth 2.0, SAML, and custom identity providers. Features include MFA, session management, and fine-grained permission controls with audit logging.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "paused",
+        "usage": "used",
+        "notes": "Development paused pending security audit completion"
+      },
+      "tags": ["security", "oauth", "authentication", "enterprise"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1633265486064-086b219458ec?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/authguard",
+        "repository": "https://github.com/awanalabs/authguard",
+        "documentation": "https://docs.awanalabs.com/authguard"
+      },
+      "timestamps": {
+        "created_at": "2024-01-05T09:00:00Z",
+        "last_updated_at": "2024-11-20T11:00:00Z"
+      }
+    },
+    {
+      "id": "cli-tools",
+      "issue_number": 105,
+      "title": "Awana CLI",
+      "slug": "cli-tools",
+      "description": "Command-line interface for managing Awana services and deployments. Includes project scaffolding, environment management, and deployment automation. Interactive prompts make complex operations simple and safe.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "active",
+        "usage": "experimental",
+        "notes": "Beta release, gathering user feedback"
+      },
+      "tags": ["cli", "devtools", "automation", "node"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/cli",
+        "repository": "https://github.com/awanalabs/cli",
+        "documentation": "https://docs.awanalabs.com/cli"
+      },
+      "timestamps": {
+        "created_at": "2024-08-12T14:00:00Z",
+        "last_updated_at": "2025-01-30T10:15:00Z"
+      }
+    },
+    {
+      "id": "legacy-bridge",
+      "issue_number": 106,
+      "title": "Legacy Bridge",
+      "slug": "legacy-bridge",
+      "description": "Integration layer for connecting legacy systems with modern Awana services. Provides adapters for SOAP, XML-RPC, and older REST patterns. Enables gradual modernization without disrupting existing workflows.",
+      "organization": {
+        "name": "Awana Labs",
+        "short_name": "Awana",
+        "url": "https://awanalabs.com"
+      },
+      "status": {
+        "state": "archived",
+        "usage": "used",
+        "notes": "Superseded by Connect SDK v3.0, maintained for legacy support only"
+      },
+      "tags": ["integration", "legacy", "soap", "migration"],
+      "media": {
+        "logo": "",
+        "images": [
+          "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80"
+        ]
+      },
+      "links": {
+        "homepage": "https://awanalabs.com/legacy-bridge",
+        "repository": "https://github.com/awanalabs/legacy-bridge",
+        "documentation": "https://docs.awanalabs.com/legacy-bridge"
+      },
+      "timestamps": {
+        "created_at": "2021-04-01T10:00:00Z",
+        "last_updated_at": "2024-06-15T08:00:00Z"
+      }
+    }
+  ]
+}

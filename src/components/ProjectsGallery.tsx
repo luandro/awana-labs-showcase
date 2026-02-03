@@ -1,0 +1,166 @@
+import { useState, useMemo } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Search } from 'lucide-react';
+import { Project } from '@/types/project';
+import { Input } from '@/components/ui/input';
+import ProjectCard from './ProjectCard';
+import ProjectModal from './ProjectModal';
+
+interface ProjectsGalleryProps {
+  projects: Project[];
+}
+
+type StatusFilter = 'all' | 'active' | 'paused' | 'archived';
+
+const filterOptions: { value: StatusFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'active', label: 'Active' },
+  { value: 'paused', label: 'Paused' },
+  { value: 'archived', label: 'Archived' },
+];
+
+const ProjectsGallery = ({ projects }: ProjectsGalleryProps) => {
+  const prefersReducedMotion = useReducedMotion();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) => {
+      // Status filter
+      if (statusFilter !== 'all' && project.status.state !== statusFilter) {
+        return false;
+      }
+      
+      // Search filter
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        return (
+          project.title.toLowerCase().includes(query) ||
+          project.description.toLowerCase().includes(query) ||
+          project.tags.some((tag) => tag.toLowerCase().includes(query))
+        );
+      }
+      
+      return true;
+    });
+  }, [projects, statusFilter, searchQuery]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: prefersReducedMotion ? 0 : 0.1,
+      },
+    },
+  };
+
+  return (
+    <section id="projects" className="py-20 px-6">
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+            Our Projects
+          </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Discover our open-source tools and libraries that power modern applications
+          </p>
+        </motion.div>
+
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="flex flex-col sm:flex-row gap-4 items-center justify-between mb-8"
+        >
+          {/* Search */}
+          <div className="relative w-full sm:w-80">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search projects..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-card/50"
+            />
+          </div>
+
+          {/* Status Filter Pills */}
+          <div className="flex gap-2 flex-wrap justify-center">
+            {filterOptions.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => setStatusFilter(option.value)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                  statusFilter === option.value
+                    ? 'bg-primary text-primary-foreground shadow-md'
+                    : 'bg-card hover:bg-secondary text-foreground border border-border'
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Projects Grid */}
+        {filteredProjects.length > 0 ? (
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          >
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                project={project}
+                index={index}
+                onClick={() => setSelectedProject(project)}
+              />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-16"
+          >
+            <p className="text-muted-foreground text-lg">
+              No projects found matching your criteria.
+            </p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setStatusFilter('all');
+              }}
+              className="mt-4 text-primary hover:underline"
+            >
+              Clear filters
+            </button>
+          </motion.div>
+        )}
+      </div>
+
+      {/* Project Modal */}
+      <ProjectModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
+    </section>
+  );
+};
+
+export default ProjectsGallery;

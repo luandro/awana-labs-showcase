@@ -1,13 +1,43 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from 'react';
+import Hero from '@/components/Hero';
+import ProjectsGallery from '@/components/ProjectsGallery';
+import Footer from '@/components/Footer';
+import { Project, ProjectsData } from '@/types/project';
 
 const Index = () => {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch('/projects.json');
+        const data: ProjectsData = await response.json();
+        setProjects(data.projects);
+      } catch (error) {
+        console.error('Failed to load projects:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="animate-pulse text-primary">Loading...</div>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Hero />
+      <ProjectsGallery projects={projects} />
+      <Footer />
+    </main>
   );
 };
 
