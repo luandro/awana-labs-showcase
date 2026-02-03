@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import Hero from '@/components/Hero';
-import ProjectsGallery from '@/components/ProjectsGallery';
-import Footer from '@/components/Footer';
-import { Project, ProjectsData } from '@/types/project';
+import { useState, useEffect } from "react";
+import Hero from "@/components/Hero";
+import ProjectsGallery from "@/components/ProjectsGallery";
+import Footer from "@/components/Footer";
+import { Project, ProjectsData } from "@/types/project";
 
 const Index = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -11,11 +11,13 @@ const Index = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('/projects.json');
+        const response = await fetch(
+          `${import.meta.env.BASE_URL}projects.json`,
+        );
         const data: ProjectsData = await response.json();
         setProjects(data.projects);
       } catch (error) {
-        console.error('Failed to load projects:', error);
+        console.error("Failed to load projects:", error);
       } finally {
         setLoading(false);
       }
