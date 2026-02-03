@@ -31,11 +31,24 @@ test.describe("Live Site Tests", () => {
     expect(bodyText?.trim().length).toBeGreaterThan(50);
   });
 
-  test("404 redirect works on live site", async ({ page }) => {
-    // Navigate to a non-existent route
-    const response = await page.goto("/this-route-does-not-exist");
+  test("HashRouter handles routes on live site", async ({ page }) => {
+    // Navigate to root with hash
+    const response = await page.goto("/#/");
 
-    // Should get 200 because 404.html redirects to index.html
+    // Should get 200 OK
+    expect(response?.status()).toBe(200);
+
+    // React root should be visible
+    await expect(page.locator("#root")).toBeVisible();
+  });
+
+  test("HashRouter handles non-existent routes on live site", async ({
+    page,
+  }) => {
+    // Navigate to a non-existent route with hash
+    const response = await page.goto("/#/this-route-does-not-exist");
+
+    // Should get 200 OK because HashRouter handles it
     expect(response?.status()).toBe(200);
 
     // React root should be visible
@@ -92,14 +105,5 @@ test.describe("Live Site Tests", () => {
     await page.waitForTimeout(3000);
 
     expect(failedRequests).toHaveLength(0);
-  });
-
-  test("404.html exists and is accessible", async ({ page }) => {
-    const response = await page.goto("/404.html");
-
-    expect(response?.status()).toBe(200);
-
-    const content = await page.content();
-    expect(content).toContain("l.replace");
   });
 });

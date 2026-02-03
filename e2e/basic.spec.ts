@@ -84,42 +84,42 @@ test.describe("Basic Page Tests", () => {
 
 /**
  * GitHub Pages SPA routing tests
- * These tests ensure the 404 redirect works for client-side routing
+ * These tests ensure HashRouter works correctly for client-side routing
  */
 test.describe("GitHub Pages Routing Tests", () => {
-  test("404 redirect handling works", async ({ page }) => {
-    // Navigate to a non-existent route
-    const response = await page.goto("/some-random-route-that-does-not-exist");
+  test("HashRouter handles routes correctly", async ({ page }) => {
+    // Navigate to root with hash
+    const response = await page.goto("/#/");
 
-    // Should get 200 because 404.html redirects to index.html
+    // Should get 200 OK
+    expect(response?.status()).toBe(200);
+
+    // React root should be visible
+    await expect(page.locator("#root")).toBeVisible();
+  });
+
+  test("HashRouter handles non-existent routes", async ({ page }) => {
+    // Navigate to a non-existent route with hash
+    const response = await page.goto(
+      "/#/some-random-route-that-does-not-exist",
+    );
+
+    // Should get 200 OK because HashRouter handles it
     expect(response?.status()).toBe(200);
 
     // React Router should handle the route and show NotFound page
     await expect(page.locator("#root")).toBeVisible();
   });
 
-  test("404.html file exists and redirects properly", async ({ page }) => {
-    // Try accessing 404.html directly
-    const response = await page.goto("/404.html");
+  test("direct URL without hash loads homepage", async ({ page }) => {
+    // Navigate without hash - should still load the app
+    const response = await page.goto("/");
 
-    // The file should exist
+    // Should get 200 OK
     expect(response?.status()).toBe(200);
 
-    // It should contain redirect script
-    const content = await page.content();
-    expect(content).toContain("l.replace");
-  });
-
-  test("query parameter redirect is handled", async ({ page }) => {
-    // Simulate the redirect from 404.html with ?p= parameter
-    await page.goto("/?p=/some-route");
-
-    // Wait for potential redirect
-    await page.waitForTimeout(500);
-
-    // Check URL was updated
-    const url = page.url();
-    expect(url).not.toContain("?p=");
+    // React root should be visible
+    await expect(page.locator("#root")).toBeVisible();
   });
 });
 
