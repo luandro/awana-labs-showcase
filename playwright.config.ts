@@ -12,7 +12,7 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   reporter: [["html"], ["list"], ["github" as any]],
   use: {
-    baseURL: "http://localhost:8080",
+    baseURL: "http://localhost:4173/awana-labs-showcase/",
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
@@ -41,8 +41,8 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: "npm run build && npm run preview",
-    url: "http://localhost:4173",
+    command: "bun run build && bun run preview",
+    url: "http://localhost:4173/awana-labs-showcase/",
     reuseExistingServer: !process.env.CI,
     timeout: 120000,
   },
