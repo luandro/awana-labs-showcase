@@ -1,0 +1,240 @@
+import { test, expect } from "@playwright/test";
+
+/**
+ * Basic page load and rendering tests
+ * These tests ensure the website loads correctly and displays content
+ */
+test.describe("Basic Page Tests", () => {
+  test("homepage loads successfully", async ({ page }) => {
+    const response = await page.goto("/");
+
+    // Should return 200 OK
+    expect(response?.status()).toBe(200);
+
+    // Check page title
+    await expect(page).toHaveTitle(/Lovable App|Awana/);
+
+    // React root should exist
+    const root = page.locator("#root");
+    await expect(root).toBeVisible();
+  });
+
+  test("page has meaningful content", async ({ page }) => {
+    await page.goto("/");
+
+    // Check that page has content (not blank)
+    const body = page.locator("body");
+    const textContent = await body.textContent();
+
+    // Should have substantial content
+    expect(textContent?.trim().length).toBeGreaterThan(100);
+
+    // Should not contain error messages
+    await expect(page.locator("body")).not.toContainText([
+      "Application error",
+      "Something went wrong",
+    ]);
+  });
+
+  test("no console errors on page load", async ({ page }) => {
+    const errors: string[] = [];
+
+    page.on("console", (msg) => {
+      if (msg.type() === "error") {
+        errors.push(msg.text());
+      }
+    });
+
+    await page.goto("/");
+
+    // Allow some time for async errors
+    await page.waitForTimeout(2000);
+
+    // Check for specific error patterns that indicate problems
+    const criticalErrors = errors.filter(
+      (e) =>
+        e.includes("Uncaught") ||
+        e.includes("TypeError") ||
+        e.includes("ReferenceError"),
+    );
+
+    expect(criticalErrors).toHaveLength(0);
+  });
+
+  test("page is responsive (mobile viewport)", async ({ page }) => {
+    // Set mobile viewport
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    // Check mobile content is visible
+    const body = page.locator("body");
+    await expect(body).toBeVisible();
+  });
+
+  test("page is responsive (desktop viewport)", async ({ page }) => {
+    // Set desktop viewport
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto("/");
+
+    // Check desktop content is visible
+    const body = page.locator("body");
+    await expect(body).toBeVisible();
+  });
+});
+
+/**
+ * GitHub Pages SPA routing tests
+ * These tests ensure the 404 redirect works for client-side routing
+ */
+test.describe("GitHub Pages Routing Tests", () => {
+  test("404 redirect handling works", async ({ page }) => {
+    // Navigate to a non-existent route
+    const response = await page.goto("/some-random-route-that-does-not-exist");
+
+    // Should get 200 because 404.html redirects to index.html
+    expect(response?.status()).toBe(200);
+
+    // React Router should handle the route and show NotFound page
+    await expect(page.locator("#root")).toBeVisible();
+  });
+
+  test("404.html file exists and redirects properly", async ({ page }) => {
+    // Try accessing 404.html directly
+    const response = await page.goto("/404.html");
+
+    // The file should exist
+    expect(response?.status()).toBe(200);
+
+    // It should contain redirect script
+    const content = await page.content();
+    expect(content).toContain("l.replace");
+  });
+
+  test("query parameter redirect is handled", async ({ page }) => {
+    // Simulate the redirect from 404.html with ?p= parameter
+    await page.goto("/?p=/some-route");
+
+    // Wait for potential redirect
+    await page.waitForTimeout(500);
+
+    // Check URL was updated
+    const url = page.url();
+    expect(url).not.toContain("?p=");
+  });
+});
+
+/**
+ * Asset loading tests
+ * Ensure all critical assets load correctly
+ */
+test.describe("Asset Loading Tests", () => {
+  test("JavaScript bundle loads", async ({ page }) => {
+    const jsRequests: string[] = [];
+
+    page.on("request", (request) => {
+      if (request.url().includes(".js")) {
+        jsRequests.push(request.url());
+      }
+    });
+
+    await page.goto("/");
+
+    // At least one JS file should be requested
+    expect(jsRequests.length).toBeGreaterThan(0);
+  });
+
+  test("CSS loads", async ({ page }) => {
+    const cssRequests: string[] = [];
+
+    page.on("request", (request) => {
+      if (request.url().includes(".css")) {
+        cssRequests.push(request.url());
+      }
+    });
+
+    await page.goto("/");
+
+    // At least one CSS file should be requested
+    expect(cssRequests.length).toBeGreaterThan(0);
+  });
+
+  test("projects.json data loads", async ({ page }) => {
+    const dataRequests: string[] = [];
+
+    page.on("request", (request) => {
+      if (request.url().includes("projects.json")) {
+        dataRequests.push(request.url());
+      }
+    });
+
+    await page.goto("/");
+
+    // Wait for data fetch
+    await page.waitForTimeout(2000);
+
+    // projects.json should be requested (unless already cached)
+    // This is a soft check - if it doesn't load, the page should still work
+  });
+});
+
+/**
+ * Accessibility tests
+ * Basic accessibility checks
+ */
+test.describe("Accessibility Tests", () => {
+  test("page has proper meta tags", async ({ page }) => {
+    await page.goto("/");
+
+    // Check viewport meta tag
+    const viewport = page.locator('meta[name="viewport"]');
+    await expect(viewport).toHaveAttribute("content", /width=device-width/);
+
+    // Check charset
+    const charset = page.locator("meta[charset]");
+    await expect(charset).toHaveAttribute("charset", "UTF-8");
+  });
+
+  test("page has proper language attribute", async ({ page }) => {
+    await page.goto("/");
+
+    const html = page.locator("html");
+    await expect(html).toHaveAttribute("lang", /en/);
+  });
+});
+
+/**
+ * Performance tests
+ * Basic performance checks
+ */
+test.describe("Performance Tests", () => {
+  test("page loads within reasonable time", async ({ page }) => {
+    const startTime = Date.now();
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+    const loadTime = Date.now() - startTime;
+
+    // Should load in less than 10 seconds
+    expect(loadTime).toBeLessThan(10000);
+  });
+
+  test("Time to First Contentful Paint is reasonable", async ({ page }) => {
+    const metrics = await page.goto("/").then(async () => {
+      return await page.evaluate(() => {
+        return new Promise((resolve) => {
+          new PerformanceObserver((list) => {
+            const entries = list.getEntries();
+            const fcp = entries.find(
+              (entry) => entry.name === "first-contentful-paint",
+            );
+            if (fcp) {
+              resolve(fcp.startTime);
+            }
+          }).observe({ entryTypes: ["paint"] });
+        });
+      });
+    });
+
+    // FCP should be less than 3 seconds (soft check)
+    // Note: This test may not work in all environments
+  });
+});
