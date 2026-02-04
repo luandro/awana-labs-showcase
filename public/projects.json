@@ -1,47 +1,6 @@
 {
   "projects": [
     {
-      "id": "comapeo-documentation",
-      "issue_number": 3,
-      "title": "CoMapeo Documentation",
-      "slug": "comapeo-documentation",
-      "description": "Official documentation for the CoMapeo platform. This site provides comprehensive guides, tutorials, and API references for users and developers working with CoMapeo - a participatory mapping tool designed for indigenous communities and environmental monitoring.\n\nThe documentation covers installation, configuration, data collection workflows, and best practices for deploying CoMapeo in the field.",
-      "organization": {
-        "name": "Digital Democracy",
-        "short_name": "digidem",
-        "url": "https://www.digital-democracy.org"
-      },
-      "status": {
-        "state": "active",
-        "usage": "widely-used",
-        "notes": "Essential resource for all CoMapeo deployments and users. Regularly updated with new features and community contributions."
-      },
-      "tags": [
-        "CoMapeo",
-        "Documentation",
-        "Mapping",
-        "Indigenous Tech",
-        "Guides",
-        "Tutorials"
-      ],
-      "media": {
-        "logo": "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/logo.png",
-        "images": [
-          "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/screenshot-home.png",
-          "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/screenshot-guides.png"
-        ]
-      },
-      "links": {
-        "homepage": "https://digidem.github.io/comapeo-docs/",
-        "repository": "https://github.com/digidem/comapeo-docs",
-        "documentation": "https://digidem.github.io/comapeo-docs/"
-      },
-      "timestamps": {
-        "created_at": "2026-02-04T01:04:19Z",
-        "last_updated_at": "2026-02-04T01:20:06Z"
-      }
-    },
-    {
       "id": "comapeo-config-spreadsheet-plugin",
       "issue_number": 2,
       "title": "CoMapeo Config Spreadsheet Plugin",
