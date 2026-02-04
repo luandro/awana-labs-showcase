@@ -1,100 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
 
 /* Awana Labs Design System
    Primary: Deep Plum #4C1130 → HSL(338, 61%, 18%)
    Accent: Warm Cream #F7F3EB → HSL(40, 43%, 95%)
 */
 
-@layer base {
-  :root {
-    --background: 40 43% 95%;
-    --foreground: 338 61% 18%;
+@theme {
+  --font-family-sans: "Inter", system-ui, sans-serif;
 
-    --card: 0 0% 100%;
-    --card-foreground: 338 61% 18%;
+  --color-background: oklch(95% 0.02 85);
+  --color-foreground: oklch(25% 0.08 30);
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 338 61% 18%;
+  --color-card: oklch(100% 0 0);
+  --color-card-foreground: oklch(25% 0.08 30);
 
-    --primary: 338 61% 18%;
-    --primary-foreground: 40 43% 95%;
+  --color-popover: oklch(100% 0 0);
+  --color-popover-foreground: oklch(25% 0.08 30);
 
-    --secondary: 338 30% 90%;
-    --secondary-foreground: 338 61% 18%;
+  --color-primary: oklch(25% 0.08 30);
+  --color-primary-foreground: oklch(95% 0.02 85);
 
-    --muted: 40 20% 90%;
-    --muted-foreground: 338 20% 40%;
+  --color-secondary: oklch(88% 0.02 30);
+  --color-secondary-foreground: oklch(25% 0.08 30);
 
-    --accent: 40 43% 95%;
-    --accent-foreground: 338 61% 18%;
+  --color-muted: oklch(85% 0.01 85);
+  --color-muted-foreground: oklch(45% 0.02 30);
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+  --color-accent: oklch(95% 0.02 85);
+  --color-accent-foreground: oklch(25% 0.08 30);
 
-    --border: 338 20% 85%;
-    --input: 338 20% 85%;
-    --ring: 338 61% 18%;
+  --color-destructive: oklch(55% 0.22 25);
+  --color-destructive-foreground: oklch(98% 0.01 85);
 
-    --radius: 0.75rem;
+  --color-border: oklch(80% 0.02 30);
+  --color-input: oklch(80% 0.02 30);
+  --color-ring: oklch(25% 0.08 30);
 
-    /* Custom tokens */
-    --plum-light: 338 40% 30%;
-    --plum-dark: 338 70% 12%;
-    --cream-dark: 40 30% 88%;
+  --radius-lg: 0.75rem;
+  --radius-md: calc(0.75rem - 2px);
+  --radius-sm: calc(0.75rem - 4px);
+
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  --color-plum-light: oklch(40% 0.06 30);
+  --color-plum-dark: oklch(18% 0.08 30);
+  --color-cream-dark: oklch(88% 0.01 85);
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
   }
-
-  .dark {
-    --background: 338 70% 8%;
-    --foreground: 40 43% 95%;
-
-    --card: 338 60% 12%;
-    --card-foreground: 40 43% 95%;
-
-    --popover: 338 60% 12%;
-    --popover-foreground: 40 43% 95%;
-
-    --primary: 40 43% 95%;
-    --primary-foreground: 338 61% 18%;
-
-    --secondary: 338 40% 20%;
-    --secondary-foreground: 40 43% 95%;
-
-    --muted: 338 30% 18%;
-    --muted-foreground: 40 20% 70%;
-
-    --accent: 338 40% 20%;
-    --accent-foreground: 40 43% 95%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 338 30% 25%;
-    --input: 338 30% 25%;
-    --ring: 40 43% 95%;
+  50% {
+    transform: translateY(-10px);
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
+@keyframes accordion-down {
+  from {
+    height: 0;
   }
-
-  body {
-    @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight;
+  to {
+    height: var(--radix-accordion-content-height);
   }
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
   }
+  to {
+    height: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: oklch(12% 0.05 30);
+    --color-foreground: oklch(95% 0.02 85);
+
+    --color-card: oklch(15% 0.05 30);
+    --color-card-foreground: oklch(95% 0.02 85);
+
+    --color-popover: oklch(15% 0.05 30);
+    --color-popover-foreground: oklch(95% 0.02 85);
+
+    --color-primary: oklch(95% 0.02 85);
+    --color-primary-foreground: oklch(25% 0.08 30);
+
+    --color-secondary: oklch(25% 0.04 30);
+    --color-secondary-foreground: oklch(95% 0.02 85);
+
+    --color-muted: oklch(20% 0.03 30);
+    --color-muted-foreground: oklch(75% 0.01 85);
+
+    --color-accent: oklch(25% 0.04 30);
+    --color-accent-foreground: oklch(95% 0.02 85);
+
+    --color-destructive: oklch(35% 0.15 25);
+    --color-destructive-foreground: oklch(98% 0.01 85);
+
+    --color-border: oklch(28% 0.03 30);
+    --color-input: oklch(28% 0.03 30);
+    --color-ring: oklch(95% 0.02 85);
+  }
+}
+
+/* Manual class support for dark mode override */
+.dark {
+  color-scheme: dark;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.text-balance {
+  text-wrap: balance;
 }
