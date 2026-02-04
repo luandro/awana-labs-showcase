@@ -25,10 +25,10 @@
         "Tutorials"
       ],
       "media": {
-        "logo": "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/logo.png",
+        "logo": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=400&fit=crop",
         "images": [
-          "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/screenshot-home.png",
-          "https://raw.githubusercontent.com/digidem/comapeo-docs/main/docs/screenshot-guides.png"
+          "https://images.unsplash.com/photo-1576157180154-8d6b5610d2b7?w=1200&h=800&fit=crop",
+          "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=800&fit=crop"
         ]
       },
       "links": {
@@ -66,10 +66,10 @@
         "Offline Tools"
       ],
       "media": {
-        "logo": "https://raw.githubusercontent.com/digidem/comapeo-config-spreadsheet-plugin/main/docs/logo.png",
+        "logo": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop",
         "images": [
-          "https://raw.githubusercontent.com/digidem/comapeo-config-spreadsheet-plugin/main/docs/screenshot-1.png",
-          "https://raw.githubusercontent.com/digidem/comapeo-config-spreadsheet-plugin/main/docs/screenshot-2.png"
+          "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=800&fit=crop",
+          "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop"
         ]
       },
       "links": {
