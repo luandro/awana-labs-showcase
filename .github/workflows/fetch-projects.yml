@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "0 0 * * *" # Runs daily at 00:00 UTC
+  issues:
+    types: [opened, edited, closed, labeled, unlabeled]
 
 permissions:
   contents: write
