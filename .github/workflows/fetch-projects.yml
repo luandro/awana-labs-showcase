@@ -10,6 +10,11 @@ on:
 permissions:
   contents: write
 
+# Prevent concurrent runs from conflicting
+concurrency:
+  group: fetch-projects
+  cancel-in-progress: false
+
 jobs:
   fetch-projects:
     runs-on: ubuntu-latest
@@ -45,6 +50,7 @@ jobs:
           if ! git diff --quiet public/projects.json; then
             git add public/projects.json
             git commit -m "chore: update projects.json from GitHub issues"
+            git pull --rebase --autostash || true
             git push
           else
             echo "No changes to projects.json"
