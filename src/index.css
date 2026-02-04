@@ -3,39 +3,39 @@
 
 /* Awana Labs Design System
    Primary: Deep Plum #4C1130 → HSL(338, 61%, 18%)
-   Accent: Warm Cream #F7F3EB → HSL(40, 43%, 95%)
+   Background: Light Cream #FAF6F0 → HSL(38.2, 44%, 95.1%)
 */
 
 @theme {
   --font-family-sans: "Inter", system-ui, sans-serif;
 
-  --color-background: oklch(95% 0.02 85);
-  --color-foreground: oklch(25% 0.08 30);
+  --color-background: #faf6f0;
+  --color-foreground: #4c1130;
 
-  --color-card: oklch(100% 0 0);
-  --color-card-foreground: oklch(25% 0.08 30);
+  --color-card: #ffffff;
+  --color-card-foreground: #4c1130;
 
-  --color-popover: oklch(100% 0 0);
-  --color-popover-foreground: oklch(25% 0.08 30);
+  --color-popover: #ffffff;
+  --color-popover-foreground: #4c1130;
 
-  --color-primary: oklch(25% 0.08 30);
-  --color-primary-foreground: oklch(95% 0.02 85);
+  --color-primary: #4c1130;
+  --color-primary-foreground: #faf6f0;
 
-  --color-secondary: oklch(88% 0.02 30);
-  --color-secondary-foreground: oklch(25% 0.08 30);
+  --color-secondary: #e8dbd0;
+  --color-secondary-foreground: #4c1130;
 
-  --color-muted: oklch(85% 0.01 85);
-  --color-muted-foreground: oklch(45% 0.02 30);
+  --color-muted: #ede8e2;
+  --color-muted-foreground: #8b3a5f;
 
-  --color-accent: oklch(95% 0.02 85);
-  --color-accent-foreground: oklch(25% 0.08 30);
+  --color-accent: #faf6f0;
+  --color-accent-foreground: #4c1130;
 
-  --color-destructive: oklch(55% 0.22 25);
-  --color-destructive-foreground: oklch(98% 0.01 85);
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
 
-  --color-border: oklch(80% 0.02 30);
-  --color-input: oklch(80% 0.02 30);
-  --color-ring: oklch(25% 0.08 30);
+  --color-border: #e8dbd0;
+  --color-input: #e8dbd0;
+  --color-ring: #4c1130;
 
   --radius-lg: 0.75rem;
   --radius-md: calc(0.75rem - 2px);
@@ -45,9 +45,9 @@
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
 
-  --color-plum-light: oklch(40% 0.06 30);
-  --color-plum-dark: oklch(18% 0.08 30);
-  --color-cream-dark: oklch(88% 0.01 85);
+  --color-plum-light: #7d2a4a;
+  --color-plum-dark: #2a0d18;
+  --color-cream-dark: #e0d5c8;
 }
 
 @keyframes float {
@@ -78,41 +78,29 @@
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  @theme {
-    --color-background: oklch(12% 0.05 30);
-    --color-foreground: oklch(95% 0.02 85);
-
-    --color-card: oklch(15% 0.05 30);
-    --color-card-foreground: oklch(95% 0.02 85);
-
-    --color-popover: oklch(15% 0.05 30);
-    --color-popover-foreground: oklch(95% 0.02 85);
-
-    --color-primary: oklch(95% 0.02 85);
-    --color-primary-foreground: oklch(25% 0.08 30);
-
-    --color-secondary: oklch(25% 0.04 30);
-    --color-secondary-foreground: oklch(95% 0.02 85);
-
-    --color-muted: oklch(20% 0.03 30);
-    --color-muted-foreground: oklch(75% 0.01 85);
-
-    --color-accent: oklch(25% 0.04 30);
-    --color-accent-foreground: oklch(95% 0.02 85);
-
-    --color-destructive: oklch(35% 0.15 25);
-    --color-destructive-foreground: oklch(98% 0.01 85);
-
-    --color-border: oklch(28% 0.03 30);
-    --color-input: oklch(28% 0.03 30);
-    --color-ring: oklch(95% 0.02 85);
-  }
-}
-
-/* Manual class support for dark mode override */
+/* Dark mode - only applied when .dark class is present */
 .dark {
   color-scheme: dark;
+
+  --color-background: #1a0e14;
+  --color-foreground: #faf6f0;
+  --color-card: #261620;
+  --color-card-foreground: #faf6f0;
+  --color-popover: #261620;
+  --color-popover-foreground: #faf6f0;
+  --color-primary: #faf6f0;
+  --color-primary-foreground: #4c1130;
+  --color-secondary: #4a2538;
+  --color-secondary-foreground: #faf6f0;
+  --color-muted: #351e2b;
+  --color-muted-foreground: #c9b5bd;
+  --color-accent: #4a2538;
+  --color-accent-foreground: #faf6f0;
+  --color-destructive: #7f1d1d;
+  --color-destructive-foreground: #fafafa;
+  --color-border: #4a2836;
+  --color-input: #4a2836;
+  --color-ring: #faf6f0;
 }
 
 * {
