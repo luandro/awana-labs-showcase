@@ -12,6 +12,15 @@ dist
 dist-ssr
 *.local
 
+# Playwright
+playwright-report/
+test-results/
+
+# Verification screenshots (root level only)
+*.png
+!public/*.png
+!src/**/*.png
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

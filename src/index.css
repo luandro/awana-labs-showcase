@@ -1,138 +1,100 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 /* Awana Labs Design System
    Primary: Deep Plum #4C1130 → HSL(338, 61%, 18%)
-   Background: Light Cream #FAF6F0 → HSL(38.2, 44%, 95.1%)
+   Accent: Warm Cream #F7F3EB → HSL(40, 43%, 95%)
 */
 
-@theme {
-  --font-family-sans: "Inter", system-ui, sans-serif;
+@layer base {
+  :root {
+    --background: 40 43% 95%;
+    --foreground: 338 61% 18%;
 
-  --color-background: #faf6f0;
-  --color-foreground: #4c1130;
+    --card: 0 0% 100%;
+    --card-foreground: 338 61% 18%;
 
-  --color-card: #ffffff;
-  --color-card-foreground: #4c1130;
+    --popover: 0 0% 100%;
+    --popover-foreground: 338 61% 18%;
 
-  --color-popover: #ffffff;
-  --color-popover-foreground: #4c1130;
+    --primary: 338 61% 18%;
+    --primary-foreground: 40 43% 95%;
 
-  --color-primary: #4c1130;
-  --color-primary-foreground: #faf6f0;
+    --secondary: 338 30% 90%;
+    --secondary-foreground: 338 61% 18%;
 
-  --color-secondary: #e8dbd0;
-  --color-secondary-foreground: #4c1130;
+    --muted: 40 20% 90%;
+    --muted-foreground: 338 20% 40%;
 
-  --color-muted: #ede8e2;
-  --color-muted-foreground: #8b3a5f;
+    --accent: 40 43% 95%;
+    --accent-foreground: 338 61% 18%;
 
-  --color-accent: #faf6f0;
-  --color-accent-foreground: #4c1130;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-  --color-destructive: #ef4444;
-  --color-destructive-foreground: #fafafa;
+    --border: 338 20% 85%;
+    --input: 338 20% 85%;
+    --ring: 338 61% 18%;
 
-  --color-border: #e8dbd0;
-  --color-input: #e8dbd0;
-  --color-ring: #4c1130;
+    --radius: 0.75rem;
 
-  --radius-lg: 0.75rem;
-  --radius-md: calc(0.75rem - 2px);
-  --radius-sm: calc(0.75rem - 4px);
-
-  --animate-float: float 3s ease-in-out infinite;
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-
-  --color-plum-light: #7d2a4a;
-  --color-plum-dark: #2a0d18;
-  --color-cream-dark: #e0d5c8;
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
+    /* Custom tokens */
+    --plum-light: 338 40% 30%;
+    --plum-dark: 338 70% 12%;
+    --cream-dark: 40 30% 88%;
   }
-  50% {
-    transform: translateY(-10px);
-  }
-}
 
-@keyframes accordion-down {
-  from {
-    height: 0;
-  }
-  to {
-    height: var(--radix-accordion-content-height);
-  }
-}
+  .dark {
+    --background: 338 70% 8%;
+    --foreground: 40 43% 95%;
 
-@keyframes accordion-up {
-  from {
-    height: var(--radix-accordion-content-height);
-  }
-  to {
-    height: 0;
+    --card: 338 60% 12%;
+    --card-foreground: 40 43% 95%;
+
+    --popover: 338 60% 12%;
+    --popover-foreground: 40 43% 95%;
+
+    --primary: 40 43% 95%;
+    --primary-foreground: 338 61% 18%;
+
+    --secondary: 338 40% 20%;
+    --secondary-foreground: 40 43% 95%;
+
+    --muted: 338 30% 18%;
+    --muted-foreground: 40 20% 70%;
+
+    --accent: 338 40% 20%;
+    --accent-foreground: 40 43% 95%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 338 30% 25%;
+    --input: 338 30% 25%;
+    --ring: 40 43% 95%;
   }
 }
 
-/* Dark mode - only applied when .dark class is present */
-.dark {
-  color-scheme: dark;
+@layer base {
+  * {
+    @apply border-border;
+  }
 
-  --color-background: #1a0e14;
-  --color-foreground: #faf6f0;
-  --color-card: #261620;
-  --color-card-foreground: #faf6f0;
-  --color-popover: #261620;
-  --color-popover-foreground: #faf6f0;
-  --color-primary: #faf6f0;
-  --color-primary-foreground: #4c1130;
-  --color-secondary: #4a2538;
-  --color-secondary-foreground: #faf6f0;
-  --color-muted: #351e2b;
-  --color-muted-foreground: #c9b5bd;
-  --color-accent: #4a2538;
-  --color-accent-foreground: #faf6f0;
-  --color-destructive: #7f1d1d;
-  --color-destructive-foreground: #fafafa;
-  --color-border: #4a2836;
-  --color-input: #4a2836;
-  --color-ring: #faf6f0;
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
 }
 
-* {
-  border-color: var(--color-border);
-}
-
-html {
-  font-size: 16px;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
-
-body {
-  background-color: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-family-sans);
-  font-size: 1rem;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-
-.text-balance {
-  text-wrap: balance;
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }
