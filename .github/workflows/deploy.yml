@@ -5,6 +5,12 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Fetch Projects Data"]
+    types:
+      - completed
+    branches:
+      - main
 
 permissions:
   contents: read
