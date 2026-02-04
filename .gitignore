@@ -21,6 +21,9 @@ test-results/
 !public/*.png
 !src/**/*.png
 
+# Verification reports
+VERIFICATION_REPORT.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
