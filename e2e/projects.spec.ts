@@ -12,7 +12,9 @@ test.describe("Projects Display Tests", () => {
     await page.waitForLoadState("networkidle");
 
     // Check that projects section exists
-    const projectsSection = page.locator("section").filter({ hasText: /projects/i });
+    const projectsSection = page
+      .locator("section")
+      .filter({ hasText: /projects/i });
     await expect(projectsSection).toBeVisible();
   });
 
@@ -24,18 +26,23 @@ test.describe("Projects Display Tests", () => {
     await page.waitForTimeout(1000);
 
     // Look for project cards - they should have project titles
-    const projectCards = page.locator("[class*='project'], [class*='Project']").or(
-      page.locator("a").filter({ hasText: /CoMapeo|Awana/ })
-    );
+    const projectCards = page
+      .locator("[class*='project'], [class*='Project']")
+      .or(page.locator("a").filter({ hasText: /CoMapeo|Awana/ }));
 
     // Wait for cards to be visible
-    await projectCards.first().waitFor({ state: "visible", timeout: 5000 }).catch(() => {
-      // If no specific cards found, check if there's any content
-      console.log("Project cards selector may need adjustment");
-    });
+    await projectCards
+      .first()
+      .waitFor({ state: "visible", timeout: 5000 })
+      .catch(() => {
+        // If no specific cards found, check if there's any content
+        console.log("Project cards selector may need adjustment");
+      });
   });
 
-  test("CoMapeo project from GitHub Issue #2 is displayed", async ({ page }) => {
+  test("CoMapeo project from GitHub Issue #2 is displayed", async ({
+    page,
+  }) => {
     await page.goto("/");
 
     // Wait for content to load
@@ -60,13 +67,19 @@ test.describe("Projects Display Tests", () => {
     await page.waitForTimeout(1000);
 
     // Look for tags - common tag selectors
-    const tags = page.locator("[class*='tag'], span[class*='badge']").or(
-      page.locator("span").filter({ hasText: /Mapping|Spreadsheet|Configuration/ })
-    );
+    const tags = page
+      .locator("[class*='tag'], span[class*='badge']")
+      .or(
+        page
+          .locator("span")
+          .filter({ hasText: /Mapping|Spreadsheet|Configuration/ }),
+      );
 
     // At least check if the page contains tag-related content
     const pageContent = page.locator("body");
-    await expect(pageContent).toContainText(/Mapping|Spreadsheet|Configuration/i);
+    await expect(pageContent).toContainText(
+      /Mapping|Spreadsheet|Configuration/i,
+    );
   });
 
   test("project status badges are displayed", async ({ page }) => {
@@ -83,7 +96,9 @@ test.describe("Projects Display Tests", () => {
     expect(textContent?.toLowerCase()).toMatch(/active|widely.?used/);
   });
 
-  test("projects.json is fetched and contains correct data", async ({ page }) => {
+  test("projects.json is fetched and contains correct data", async ({
+    page,
+  }) => {
     const jsonResponse = await page.goto("/projects.json");
 
     expect(jsonResponse?.ok()).toBeTruthy();
@@ -93,8 +108,8 @@ test.describe("Projects Display Tests", () => {
     expect(Array.isArray(data.projects)).toBeTruthy();
 
     // Should have at least the CoMapeo project
-    const comapeoProject = data.projects.find((p: any) =>
-      p.title?.includes("CoMapeo") || p.id?.includes("comapeo")
+    const comapeoProject = data.projects.find(
+      (p: any) => p.title?.includes("CoMapeo") || p.id?.includes("comapeo"),
     );
 
     expect(comapeoProject).toBeDefined();
@@ -125,7 +140,10 @@ test.describe("Projects Display Tests", () => {
     await page.waitForTimeout(1000);
 
     // Try to find and click a project card
-    const projectLink = page.locator("a, div, button").filter({ hasText: /CoMapeo/i }).first();
+    const projectLink = page
+      .locator("a, div, button")
+      .filter({ hasText: /CoMapeo/i })
+      .first();
 
     const isVisible = await projectLink.isVisible().catch(() => false);
     if (isVisible) {
@@ -133,7 +151,9 @@ test.describe("Projects Display Tests", () => {
       await page.waitForTimeout(500);
 
       // If modal opens, check for detail content
-      const modal = page.locator("[role='dialog'], .modal, [class*='Modal'], [class*='dialog']");
+      const modal = page.locator(
+        "[role='dialog'], .modal, [class*='Modal'], [class*='dialog']",
+      );
       const modalExists = await modal.count();
 
       if (modalExists > 0) {
@@ -154,7 +174,7 @@ test.describe("Projects Data Pipeline Tests", () => {
 
     // Validate structure
     expect(data).toMatchObject({
-      projects: expect.any(Array)
+      projects: expect.any(Array),
     });
 
     // Each project should have required fields
@@ -181,18 +201,20 @@ test.describe("Projects Data Pipeline Tests", () => {
     expect(project?.slug).toBe("comapeo-config-spreadsheet-plugin");
     expect(project?.organization?.name).toBe("Digital Democracy");
     expect(project?.organization?.short_name).toBe("digidem");
-    expect(project?.organization?.url).toBe("https://www.digital-democracy.org");
+    expect(project?.organization?.url).toBe(
+      "https://www.digital-democracy.org",
+    );
     expect(project?.status?.state).toBe("active");
     expect(project?.status?.usage).toBe("widely-used");
-    expect(project?.tags).toEqual(expect.arrayContaining([
-      "CoMapeo",
-      "Mapping",
-      "Spreadsheet"
-    ]));
-    expect(project?.media?.logo).toContain("logo.png");
+    expect(project?.tags).toEqual(
+      expect.arrayContaining(["CoMapeo", "Mapping", "Spreadsheet"]),
+    );
+    expect(project?.media?.logo).toContain("unsplash.com");
     expect(project?.media?.images).toHaveLength(2);
     expect(project?.links?.homepage).toContain("lab.digital-democracy.org");
-    expect(project?.links?.repository).toContain("github.com/digidem/comapeo-config-spreadsheet-plugin");
+    expect(project?.links?.repository).toContain(
+      "github.com/digidem/comapeo-config-spreadsheet-plugin",
+    );
   });
 
   test("all projects have required timestamps", async ({ page }) => {
@@ -216,7 +238,9 @@ test.describe("Project Links Tests", () => {
     const data = await response?.json();
 
     const comapeoProject = data.projects.find((p: any) => p.issue_number === 2);
-    expect(comapeoProject?.links?.repository).toBe("https://github.com/digidem/comapeo-config-spreadsheet-plugin");
+    expect(comapeoProject?.links?.repository).toBe(
+      "https://github.com/digidem/comapeo-config-spreadsheet-plugin",
+    );
   });
 
   test("homepage and documentation links exist", async ({ page }) => {

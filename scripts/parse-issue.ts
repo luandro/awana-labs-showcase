@@ -3,7 +3,13 @@
  *
  * Parses GitHub issue Markdown body into the project JSON schema
  * following the format defined in public/projects.json
+ *
+ * This module uses Zod schemas defined in ../src/types/project.schema.ts
+ * for runtime validation of parsed project data.
  */
+
+// Import validation schema and types
+import { projectSchema, type Project } from "../src/types/project.schema.js";
 
 // ============================================================================
 // Type Definitions
@@ -18,9 +24,10 @@ interface SectionContent {
 }
 
 /**
- * Parsed project data matching public/projects.json schema
+ * Raw parsed project data before validation
+ * Internal type used during parsing before Zod validation
  */
-export interface ProjectData {
+interface RawProjectData {
   id: string;
   issue_number: number;
   title: string;
@@ -51,6 +58,12 @@ export interface ProjectData {
     last_updated_at: string;
   };
 }
+
+/**
+ * Validated project data type exported from this module
+ * Re-exported from the schema for convenience
+ */
+export type ProjectData = Project;
 
 // ============================================================================
 // Utility Functions
@@ -295,12 +308,12 @@ function parseNotes(section: SectionContent | null): string {
   // Also check if there's content on the same line as the marker
   const notesMarkerLine = lines[notesIndex];
   // Find the colon and skip past it (also skip the closing **)
-  const colonIndex = notesMarkerLine.indexOf(':');
+  const colonIndex = notesMarkerLine.indexOf(":");
   let sameLineContent = "";
   if (colonIndex >= 0) {
     sameLineContent = notesMarkerLine.substring(colonIndex + 1).trim();
     // Remove any remaining asterisks
-    sameLineContent = sameLineContent.replace(/\*+/g, '').trim();
+    sameLineContent = sameLineContent.replace(/\*+/g, "").trim();
   }
 
   const allNotes = sameLineContent
@@ -407,8 +420,8 @@ export function parseIssueBody(
     }
   }
 
-  // Build project object
-  const project: ProjectData = {
+  // Build raw project object
+  const rawProject: RawProjectData = {
     id,
     issue_number: issueNumber,
     title,
@@ -440,7 +453,16 @@ export function parseIssueBody(
     },
   };
 
-  return project;
+  // Validate with Zod schema
+  const validationResult = projectSchema.safeParse(rawProject);
+
+  if (!validationResult.success) {
+    console.error(`Validation failed for issue #${issueNumber}:`);
+    console.error(validationResult.error.format());
+    return null;
+  }
+
+  return validationResult.data;
 }
 
 // ============================================================================
@@ -448,7 +470,8 @@ export function parseIssueBody(
 // ============================================================================
 
 // Only run CLI when this is the main module (not when imported)
-const isMainModule = import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`;
+const isMainModule =
+  import.meta.url === `file://${process.argv[1].replace(/\\/g, "/")}`;
 
 if (isMainModule) {
   // This block runs when the file is executed directly
