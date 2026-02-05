@@ -109,7 +109,8 @@ test.describe("Projects Display Tests", () => {
 
     // Should have at least the CoMapeo project
     const comapeoProject = data.projects.find(
-      (p: any) => p.title?.includes("CoMapeo") || p.id?.includes("comapeo"),
+      (p: { title?: string; id?: string }) =>
+        p.title?.includes("CoMapeo") || p.id?.includes("comapeo"),
     );
 
     expect(comapeoProject).toBeDefined();
@@ -178,7 +179,7 @@ test.describe("Projects Data Pipeline Tests", () => {
     });
 
     // Each project should have required fields
-    data.projects.forEach((project: any) => {
+    data.projects.forEach((project: Record<string, unknown>) => {
       expect(project).toHaveProperty("id");
       expect(project).toHaveProperty("title");
       expect(project).toHaveProperty("slug");
@@ -194,7 +195,9 @@ test.describe("Projects Data Pipeline Tests", () => {
     const response = await page.goto("/projects.json");
     const data = await response?.json();
 
-    const project = data.projects.find((p: any) => p.issue_number === 2);
+    const project = data.projects.find(
+      (p: { issue_number?: number }) => p.issue_number === 2,
+    );
 
     expect(project).toBeDefined();
     expect(project?.title).toBe("CoMapeo Config Spreadsheet Plugin");
@@ -209,7 +212,7 @@ test.describe("Projects Data Pipeline Tests", () => {
     expect(project?.tags).toEqual(
       expect.arrayContaining(["CoMapeo", "Mapping", "Spreadsheet"]),
     );
-    expect(project?.media?.logo).toContain("unsplash.com");
+    expect(project?.media?.logo).toContain("logo.png");
     expect(project?.media?.images).toHaveLength(2);
     expect(project?.links?.homepage).toContain("lab.digital-democracy.org");
     expect(project?.links?.repository).toContain(
@@ -221,11 +224,17 @@ test.describe("Projects Data Pipeline Tests", () => {
     const response = await page.goto("/projects.json");
     const data = await response?.json();
 
-    data.projects.forEach((project: any) => {
-      expect(project.timestamps).toBeDefined();
-      expect(project.timestamps.created_at).toMatch(/^\d{4}-\d{2}-\d{2}T/);
-      expect(project.timestamps.last_updated_at).toMatch(/^\d{4}-\d{2}-\d{2}T/);
-    });
+    data.projects.forEach(
+      (project: {
+        timestamps?: { created_at: string; last_updated_at: string };
+      }) => {
+        expect(project.timestamps).toBeDefined();
+        expect(project.timestamps.created_at).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+        expect(project.timestamps.last_updated_at).toMatch(
+          /^\d{4}-\d{2}-\d{2}T/,
+        );
+      },
+    );
   });
 });
 
@@ -237,7 +246,9 @@ test.describe("Project Links Tests", () => {
     const response = await page.goto("/projects.json");
     const data = await response?.json();
 
-    const comapeoProject = data.projects.find((p: any) => p.issue_number === 2);
+    const comapeoProject = data.projects.find(
+      (p: { issue_number?: number }) => p.issue_number === 2,
+    );
     expect(comapeoProject?.links?.repository).toBe(
       "https://github.com/digidem/comapeo-config-spreadsheet-plugin",
     );
@@ -247,7 +258,9 @@ test.describe("Project Links Tests", () => {
     const response = await page.goto("/projects.json");
     const data = await response?.json();
 
-    const comapeoProject = data.projects.find((p: any) => p.issue_number === 2);
+    const comapeoProject = data.projects.find(
+      (p: { issue_number?: number }) => p.issue_number === 2,
+    );
     expect(comapeoProject?.links?.homepage).toBeTruthy();
     expect(comapeoProject?.links?.repository).toBeTruthy();
   });

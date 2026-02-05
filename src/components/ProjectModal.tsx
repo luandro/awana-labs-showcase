@@ -1,9 +1,21 @@
-import { useEffect, useCallback, useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion, type Variants } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ExternalLink, Github, BookOpen } from 'lucide-react';
-import { Project } from '@/types/project';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { useEffect, useCallback, useState, useRef } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  Github,
+  BookOpen,
+} from "lucide-react";
+import { Project } from "@/types/project";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface ProjectModalProps {
   project: Project | null;
@@ -12,15 +24,15 @@ interface ProjectModalProps {
 }
 
 const statusColors = {
-  active: 'bg-green-500/10 text-green-700 border-green-500/20',
-  paused: 'bg-amber-500/10 text-amber-700 border-amber-500/20',
-  archived: 'bg-muted text-muted-foreground border-border',
+  active: "bg-green-500/10 text-green-700 border-green-500/20",
+  paused: "bg-amber-500/10 text-amber-700 border-amber-500/20",
+  archived: "bg-muted text-muted-foreground border-border",
 };
 
 const usageLabels = {
-  experimental: 'Experimental',
-  used: 'In Use',
-  'widely-used': 'Widely Used',
+  experimental: "Experimental",
+  used: "In Use",
+  "widely-used": "Widely Used",
 };
 
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
@@ -28,40 +40,42 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Reset image index when project changes
-  useEffect(() => {
+  const prevProjectIdRef = useRef<string | undefined>(undefined);
+  if (project?.id !== prevProjectIdRef.current) {
+    prevProjectIdRef.current = project?.id;
     setCurrentImageIndex(0);
-  }, [project?.id]);
+  }
 
   // Handle keyboard navigation
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (!isOpen) return;
-      
-      if (e.key === 'Escape') {
+
+      if (e.key === "Escape") {
         onClose();
-      } else if (e.key === 'ArrowLeft' && project?.media.images.length) {
+      } else if (e.key === "ArrowLeft" && project?.media.images.length) {
         setCurrentImageIndex((prev) =>
-          prev === 0 ? project.media.images.length - 1 : prev - 1
+          prev === 0 ? project.media.images.length - 1 : prev - 1,
         );
-      } else if (e.key === 'ArrowRight' && project?.media.images.length) {
+      } else if (e.key === "ArrowRight" && project?.media.images.length) {
         setCurrentImageIndex((prev) =>
-          prev === project.media.images.length - 1 ? 0 : prev + 1
+          prev === project.media.images.length - 1 ? 0 : prev + 1,
         );
       }
     },
-    [isOpen, onClose, project]
+    [isOpen, onClose, project],
   );
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown);
-    
+    document.addEventListener("keydown", handleKeyDown);
+
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
-    
+
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = '';
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
     };
   }, [handleKeyDown, isOpen]);
 
@@ -71,19 +85,19 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   };
 
   const modalVariants: Variants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       scale: prefersReducedMotion ? 1 : 0.95,
       y: prefersReducedMotion ? 0 : 20,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       scale: 1,
       y: 0,
       transition: { duration: 0.3, ease: [0.25, 0.1, 0.25, 1] },
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       scale: prefersReducedMotion ? 1 : 0.95,
       y: prefersReducedMotion ? 0 : 20,
       transition: { duration: 0.2, ease: [0.25, 0.1, 0.25, 1] },
@@ -107,7 +121,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
             onClick={onClose}
             className="absolute inset-0 bg-background/80 backdrop-blur-sm"
           />
-          
+
           {/* Modal */}
           <motion.div
             variants={modalVariants}
@@ -127,7 +141,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
             >
               <X className="w-5 h-5" />
             </button>
-            
+
             <div className="overflow-y-auto max-h-[90vh]">
               {/* Image Carousel */}
               {hasImages && (
@@ -144,14 +158,16 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       className="w-full h-full object-cover"
                     />
                   </AnimatePresence>
-                  
+
                   {project.media.images.length > 1 && (
                     <>
                       {/* Navigation arrows */}
                       <button
                         onClick={() =>
                           setCurrentImageIndex((prev) =>
-                            prev === 0 ? project.media.images.length - 1 : prev - 1
+                            prev === 0
+                              ? project.media.images.length - 1
+                              : prev - 1,
                           )
                         }
                         className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
@@ -162,7 +178,9 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       <button
                         onClick={() =>
                           setCurrentImageIndex((prev) =>
-                            prev === project.media.images.length - 1 ? 0 : prev + 1
+                            prev === project.media.images.length - 1
+                              ? 0
+                              : prev + 1,
                           )
                         }
                         className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-background/80 hover:bg-background transition-colors"
@@ -170,7 +188,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                       >
                         <ChevronRight className="w-5 h-5" />
                       </button>
-                      
+
                       {/* Dots indicator */}
                       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                         {project.media.images.map((_, index) => (
@@ -179,8 +197,8 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                             onClick={() => setCurrentImageIndex(index)}
                             className={`w-2 h-2 rounded-full transition-colors ${
                               index === currentImageIndex
-                                ? 'bg-primary'
-                                : 'bg-background/50 hover:bg-background/80'
+                                ? "bg-primary"
+                                : "bg-background/50 hover:bg-background/80"
                             }`}
                             aria-label={`Go to image ${index + 1}`}
                           />
@@ -190,7 +208,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                   )}
                 </div>
               )}
-              
+
               {/* Content */}
               <div className="p-6 md:p-8">
                 {/* Header */}
@@ -201,12 +219,15 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                     </span>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h2 id="modal-title" className="text-2xl font-bold text-card-foreground mb-2">
+                    <h2
+                      id="modal-title"
+                      className="text-2xl font-bold text-card-foreground mb-2"
+                    >
                       {project.title}
                     </h2>
                     <div className="flex flex-wrap gap-2">
-                      <Badge 
-                        variant="outline" 
+                      <Badge
+                        variant="outline"
                         className={`capitalize ${statusColors[project.status.state]}`}
                       >
                         {project.status.state}
@@ -217,33 +238,40 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Description */}
                 <p className="text-muted-foreground mb-6 leading-relaxed">
                   {project.description}
                 </p>
-                
+
                 {/* Status Notes */}
                 {project.status.notes && (
                   <div className="mb-6 p-4 rounded-lg bg-muted/50 border border-border">
                     <p className="text-sm text-muted-foreground">
-                      <span className="font-medium">Status:</span> {project.status.notes}
+                      <span className="font-medium">Status:</span>{" "}
+                      {project.status.notes}
                     </p>
                   </div>
                 )}
-                
+
                 {/* Tags */}
                 <div className="mb-6">
-                  <h3 className="text-sm font-medium text-card-foreground mb-3">Tags</h3>
+                  <h3 className="text-sm font-medium text-card-foreground mb-3">
+                    Tags
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="bg-secondary/50">
+                      <Badge
+                        key={tag}
+                        variant="secondary"
+                        className="bg-secondary/50"
+                      >
                         {tag}
                       </Badge>
                     ))}
                   </div>
                 </div>
-                
+
                 {/* Links */}
                 <div className="flex flex-wrap gap-3">
                   {project.links.homepage && (
@@ -283,14 +311,20 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                     </Button>
                   )}
                 </div>
-                
+
                 {/* Timestamps */}
                 <div className="mt-6 pt-6 border-t border-border flex flex-wrap gap-4 text-xs text-muted-foreground">
                   <span>
-                    Created: {new Date(project.timestamps.created_at).toLocaleDateString()}
+                    Created:{" "}
+                    {new Date(
+                      project.timestamps.created_at,
+                    ).toLocaleDateString()}
                   </span>
                   <span>
-                    Updated: {new Date(project.timestamps.last_updated_at).toLocaleDateString()}
+                    Updated:{" "}
+                    {new Date(
+                      project.timestamps.last_updated_at,
+                    ).toLocaleDateString()}
                   </span>
                 </div>
               </div>

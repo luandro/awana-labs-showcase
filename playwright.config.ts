@@ -10,7 +10,11 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: [["html"], ["list"], ["github" as any]],
+  reporter: [
+    ["html"],
+    ["list"],
+    ["github" as unknown as import("@playwright/test").ReporterDescription],
+  ],
   use: {
     baseURL: "http://localhost:4173/awana-labs-showcase/",
     trace: "on-first-retry",
