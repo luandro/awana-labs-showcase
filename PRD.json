@@ -44,9 +44,134 @@
     },
     {
       "title": "Identify cross-cutting utilities to move to src/lib or src/types with targets",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
-      "description": "List candidate helpers/types and their intended target locations."
+      "description": "List candidate helpers/types and their intended target locations.",
+      "findings": {
+        "status_constants": {
+          "current_locations": [
+            "src/components/ProjectCard.tsx:12-16",
+            "src/components/ProjectModal.tsx:14-18"
+          ],
+          "description": "statusColors object maps project status states to Tailwind color classes",
+          "target": "src/lib/constants.ts",
+          "rationale": "Duplicated in 2 components, should be centralized to ensure consistency and reduce duplication"
+        },
+        "usage_labels": {
+          "current_locations": [
+            "src/components/ProjectCard.tsx:18-22",
+            "src/components/ProjectModal.tsx:20-24"
+          ],
+          "description": "usageLabels object maps usage enum values to human-readable labels",
+          "target": "src/lib/constants.ts",
+          "rationale": "Duplicated in 2 components, should be centralized for consistency"
+        },
+        "project_filter_type": {
+          "current_locations": ["src/components/ProjectsGallery.tsx:13"],
+          "description": "StatusFilter type definition for filtering projects",
+          "target": "src/types/project.ts",
+          "rationale": "Domain-specific type related to Project, should be co-located with other Project types"
+        },
+        "filter_options": {
+          "current_locations": ["src/components/ProjectsGallery.tsx:15-20"],
+          "description": "filterOptions array defining available status filter options",
+          "target": "src/lib/constants.ts or src/types/project.ts as const export",
+          "rationale": "Configuration data that should be centralized and potentially type-safe"
+        },
+        "date_formatting": {
+          "current_locations": [
+            "src/components/ProjectCard.tsx:108",
+            "src/components/ProjectModal.tsx:290, 293"
+          ],
+          "description": "Date formatting using toLocaleDateString() scattered across components",
+          "target": "src/lib/date.ts",
+          "rationale": "Cross-cutting formatting utility that should be centralized for consistent date formatting"
+        },
+        "scroll_to_element": {
+          "current_locations": ["src/components/Hero.tsx:28-30"],
+          "description": "scrollToProjects function using getElementById and scrollIntoView",
+          "target": "src/lib/dom.ts",
+          "rationale": "Reusable DOM utility pattern that could be abstracted for general scroll-to-element behavior"
+        },
+        "keyboard_navigation": {
+          "current_locations": [
+            "src/components/ProjectCard.tsx:60",
+            "src/components/ProjectModal.tsx:36-53"
+          ],
+          "description": "Keyboard event handlers for accessibility (Enter, Escape, Arrow keys)",
+          "target": "src/lib/a11y.ts or src/hooks/use-keyboard-navigation.ts",
+          "rationale": "Cross-cutting accessibility pattern that could be abstracted into reusable hooks or utilities"
+        },
+        "animation_variants": {
+          "current_locations": [
+            "src/components/Hero.tsx:8-26",
+            "src/components/ProjectCard.tsx:27-43",
+            "src/components/ProjectModal.tsx:68-91",
+            "src/components/ProjectsGallery.tsx:49-57"
+          ],
+          "description": "Framer Motion Variants objects for animations",
+          "target": "src/lib/animations.ts",
+          "rationale": "Duplicated animation patterns across components could be centralized for consistency and easier maintenance"
+        },
+        "data_fetching": {
+          "current_locations": ["src/pages/Index.tsx:12-24"],
+          "description": "Raw fetch() call for loading projects data",
+          "target": "src/lib/api.ts",
+          "rationale": "Data fetching logic should be abstracted into a reusable API client with error handling, typing, and potential caching"
+        },
+        "external_links": {
+          "current_locations": [
+            "src/components/ProjectModal.tsx:251-284",
+            "src/components/Footer.tsx:16-23"
+          ],
+          "description": "External link button patterns with target='_blank' and rel='noopener noreferrer'",
+          "target": "src/components/ui/external-link.tsx or src/lib/a11y.ts for helper constants",
+          "rationale": "Security best practice pattern that could be abstracted into a reusable component or utility"
+        },
+        "motion_preferences": {
+          "current_locations": [
+            "src/components/Hero.tsx:6",
+            "src/components/ProjectCard.tsx:25",
+            "src/components/ProjectModal.tsx:27",
+            "src/components/ProjectsGallery.tsx:23"
+          ],
+          "description": "useReducedMotion hook usage for accessibility",
+          "target": "Already using framer-motion's hook, but could wrap in custom hook",
+          "rationale": "Consider custom hook useAccessibleMotion() for consistent reduced motion handling"
+        },
+        "body_scroll_lock": {
+          "current_locations": ["src/components/ProjectModal.tsx:55-66"],
+          "description": "Body scroll lock implementation for modal open state",
+          "target": "src/hooks/use-body-scroll-lock.ts",
+          "rationale": "Reusable pattern for any modal/dialog component that needs to prevent background scrolling"
+        },
+        "modal_variants": {
+          "current_locations": ["src/components/ProjectModal.tsx:68-91"],
+          "description": "Backdrop and modal animation variants",
+          "target": "src/lib/animations.ts",
+          "rationale": "Generic modal animation patterns could be reused across different modal/dialog components"
+        },
+        "image_carousel_logic": {
+          "current_locations": [
+            "src/components/ProjectModal.tsx:28, 42-49, 152-166"
+          ],
+          "description": "Image carousel state management and navigation logic",
+          "target": "src/hooks/use-image-carousel.ts",
+          "rationale": "Reusable carousel logic that could be applied to any image gallery component"
+        },
+        "mobile_breakpoint": {
+          "current_locations": ["src/hooks/use-mobile.tsx:3"],
+          "description": "MOBILE_BREAKPOINT constant",
+          "target": "src/lib/constants.ts",
+          "rationale": "Configuration constant that should be centralized and potentially shared across responsive utilities"
+        },
+        "filter_projects": {
+          "current_locations": ["src/components/ProjectsGallery.tsx:28-46"],
+          "description": "Project filtering logic by status and search query",
+          "target": "src/lib/project-utils.ts",
+          "rationale": "Business logic that could be tested independently and reused across different views"
+        }
+      }
     },
     {
       "title": "Review data fetching patterns and list all distinct patterns with file paths",
