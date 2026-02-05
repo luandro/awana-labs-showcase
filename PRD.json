@@ -20,121 +20,121 @@
     },
     {
       "title": "Research README best practices/templates and summarize patterns in PRD.md",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Use web research (GitHub docs, Make a README, Google styleguide, Awesome README lists) and record the key patterns to adopt."
     },
     {
       "title": "Review routing/page composition and list duplication or responsibility issues in PRD.md Core Findings",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Identify duplicated layouts or unclear ownership and note files plus suggested fixes under Core Findings."
     },
     {
       "title": "Audit shared components for API consistency and reuse; record recommendations with file paths",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Review src/components for prop typing gaps, inconsistent APIs, and reuse candidates; record concrete refactors with paths."
     },
     {
       "title": "Evaluate hooks/state management patterns and list inconsistencies with file references",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Review src/hooks and pages for anti-patterns; record files and recommended fixes."
     },
     {
       "title": "Identify cross-cutting utilities to move to src/lib or src/types with targets",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "List candidate helpers/types and their intended target locations."
     },
     {
       "title": "Review data fetching patterns and list all distinct patterns with file paths",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Enumerate how data fetching is done across the codebase and list each pattern with file references."
     },
     {
       "title": "Check API client/fetch helpers for typing/caching/SoC and propose changes",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Identify improvements to typing, caching, or separation of concerns and specify target files."
     },
     {
       "title": "Identify missing validation/schema typing and propose where to add types",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "List missing validation/type definitions and the exact target in src/types or related files."
     },
     {
       "title": "Assess styling patterns and list recommended standardizations with examples",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Call out inconsistent styling patterns and provide recommended standards with examples and files."
     },
     {
       "title": "Review accessibility coverage and note missing attributes/interactions with file references",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Identify missing ARIA attributes, keyboard navigation gaps, and focus issues with file references."
     },
     {
       "title": "Identify layout/UI logic to extract into primitives with candidate components",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "List candidate UI primitives and where they should live."
     },
     {
       "title": "Verify responsiveness across breakpoints and record issues with file references",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Test mobile/tablet/desktop/large desktop and record exact layout issues with file references."
     },
     {
       "title": "Review build configuration for clarity/unused settings and list updates with exact files",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Inspect Vite/TS/Tailwind configs and list specific unused or unclear settings with target files."
     },
     {
       "title": "Check CI/scripts for maintainability gaps and list concrete fixes with file paths",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Inspect scripts/CI config and record concrete improvements with file references."
     },
     {
       "title": "Audit unit/integration test coverage and list gaps with file references",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Map tests to critical components/helpers and list missing coverage with file references."
     },
     {
       "title": "Identify flaky or redundant tests and list tests to remove or merge",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Name the exact test files/cases that are flaky or redundant and suggest consolidations."
     },
     {
       "title": "Propose new tests for high-risk areas with suggested filenames and locations",
-      "completed": false,
+      "completed": true,
       "parallel_group": 1,
       "description": "Provide concrete test ideas with suggested file names and locations."
     },
     {
       "title": "Draft best-in-class README.md tailored to repo goals and workflows",
-      "completed": false,
+      "completed": true,
       "parallel_group": 2,
       "description": "Update README.md to reflect the best-practice structure, usage, contribution, and verification details."
     },
     {
       "title": "Document recommended refactors and execution order with risks/dependencies",
-      "completed": false,
+      "completed": true,
       "parallel_group": 2,
       "description": "Create an ordered plan with risk notes and dependencies between refactors."
     },
     {
       "title": "Remove all Lovable-related artifacts and add neutral placeholders; list removals in PRD.md",
-      "completed": false,
+      "completed": true,
       "parallel_group": 2,
       "description": "Delete or replace any Lovable-related libraries, tags, images, text, or metadata and document the changes."
     },
