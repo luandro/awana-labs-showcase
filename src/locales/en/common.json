@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Building Digital Experiences",
+    "subtitle": "Crafting innovative web solutions with modern technologies",
+    "cta": "View Projects"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "Explore our latest work and innovations",
+    "viewProject": "View Project",
+    "technologies": "Technologies",
+    "status": "Status"
+  },
+  "footer": {
+    "copyright": "© {{year}} Awana Labs. All rights reserved.",
+    "madeWith": "Made with",
+    "love": "love"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Retry",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "noResults": "No results found",
+    "viewMore": "View More"
+  },
+  "status": {
+    "active": "Active",
+    "completed": "Completed",
+    "inProgress": "In Progress",
+    "planned": "Planned"
+  }
+}

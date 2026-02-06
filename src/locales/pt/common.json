@@ -1,0 +1,46 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "title": "Construindo Experiências Digitais",
+    "subtitle": "Criando soluções web inovadoras com tecnologias modernas",
+    "cta": "Ver Projetos"
+  },
+  "projects": {
+    "title": "Projetos em Destaque",
+    "subtitle": "Explore nossos trabalhos e inovações mais recentes",
+    "viewProject": "Ver Projeto",
+    "technologies": "Tecnologias",
+    "status": "Status"
+  },
+  "footer": {
+    "copyright": "© {{year}} Awana Labs. Todos os direitos reservados.",
+    "madeWith": "Feito com",
+    "love": "amor"
+  },
+  "common": {
+    "loading": "Carregando...",
+    "error": "Ocorreu um erro",
+    "retry": "Tentar Novamente",
+    "close": "Fechar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "noResults": "Nenhum resultado encontrado",
+    "viewMore": "Ver Mais"
+  },
+  "status": {
+    "active": "Ativo",
+    "completed": "Concluído",
+    "inProgress": "Em Andamento",
+    "planned": "Planejado"
+  }
+}
